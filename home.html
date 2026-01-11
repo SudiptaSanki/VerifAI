@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VerifAI - Home</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Theme Dropdown Styles */
+        .theme-dropdown {
+            position: relative;
+        }
+
+        .theme-dropdown-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-dropdown-btn:hover {
+            border-color: var(--accent-primary);
+        }
+
+        .theme-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .theme-dropdown.active .theme-dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: var(--text-primary);
+        }
+
+        .theme-option:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .theme-option.active {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--accent-primary);
+        }
+
+        .theme-color-dot {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            border: 2px solid transparent;
+        }
+
+        .theme-option.active .theme-color-dot {
+            border-color: var(--accent-primary);
+        }
+
+        /* Floating Background Elements */
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-icon {
+            position: absolute;
+            opacity: 0.15;
+            animation: floatIcon 20s ease-in-out infinite;
+        }
+
+        .floating-icon svg {
+            width: 100%;
+            height: 100%;
+            stroke: var(--accent-primary);
+            filter: drop-shadow(0 0 10px var(--accent-primary));
+        }
+
+        /* Clickable Logo */
+        .nav-logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-logo-link:hover {
+            transform: scale(1.02);
+        }
+
+        .nav-logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+        }
+
+        @keyframes floatIcon {
+
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            25% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+
+            50% {
+                transform: translateY(-10px) rotate(-3deg);
+            }
+
+            75% {
+                transform: translateY(-25px) rotate(3deg);
+            }
+        }
+
+        .float-1 {
+            top: 10%;
+            left: 5%;
+            width: 60px;
+            height: 60px;
+            animation-delay: 0s;
+            animation-duration: 18s;
+        }
+
+        .float-2 {
+            top: 20%;
+            right: 8%;
+            width: 80px;
+            height: 80px;
+            animation-delay: -3s;
+            animation-duration: 22s;
+        }
+
+        .float-3 {
+            top: 45%;
+            left: 3%;
+            width: 50px;
+            height: 50px;
+            animation-delay: -6s;
+            animation-duration: 20s;
+        }
+
+        .float-4 {
+            top: 60%;
+            right: 5%;
+            width: 70px;
+            height: 70px;
+            animation-delay: -9s;
+            animation-duration: 25s;
+        }
+
+        .float-5 {
+            top: 75%;
+            left: 10%;
+            width: 45px;
+            height: 45px;
+            animation-delay: -12s;
+            animation-duration: 19s;
+        }
+
+        .float-6 {
+            top: 85%;
+            right: 12%;
+            width: 55px;
+            height: 55px;
+            animation-delay: -15s;
+            animation-duration: 23s;
+        }
+
+        .float-7 {
+            top: 30%;
+            left: 90%;
+            width: 65px;
+            height: 65px;
+            animation-delay: -4s;
+            animation-duration: 21s;
+        }
+
+        .float-8 {
+            top: 50%;
+            right: 92%;
+            width: 40px;
+            height: 40px;
+            animation-delay: -8s;
+            animation-duration: 17s;
+        }
+
+        /* How It Works Demo Animation Styles */
+        .demo-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 16px;
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            padding: 40px;
+            border: 2px solid var(--border-color);
+        }
+
+        .demo-step {
+            display: none;
+            animation: demoFadeIn 0.8s ease-out;
+        }
+
+        .demo-step.active {
+            display: block;
+        }
+
+        @keyframes demoFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .demo-progress {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .demo-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .demo-dot.active {
+            background: var(--accent-primary);
+            transform: scale(1.2);
+        }
+
+        .demo-mockup {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        .demo-mockup-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .demo-mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .typing-effect {
+            overflow: hidden;
+            border-right: 2px solid var(--accent-primary);
+            white-space: nowrap;
+            animation: typing 2s steps(40) infinite, blink 0.7s step-end infinite;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+            animation: scanMove 2s ease-in-out infinite;
+        }
+
+        @keyframes scanMove {
+            0% {
+                top: 0;
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                top: 100%;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="theme-dark">
+    <!-- Floating Background Elements -->
+    <div class="floating-elements">
+        <!-- Shield Icon -->
+        <div class="floating-icon float-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+        </div>
+        <!-- Checkmark Circle -->
+        <div class="floating-icon float-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+            </svg>
+        </div>
+        <!-- Document -->
+        <div class="floating-icon float-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+            </svg>
+        </div>
+        <!-- Eye (Verification) -->
+        <div class="floating-icon float-4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                <circle cx="12" cy="12" r="3" />
+            </svg>
+        </div>
+        <!-- Lightbulb (AI) -->
+        <div class="floating-icon float-5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M9 18h6" />
+                <path d="M10 22h4" />
+                <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A7 7 0 1012 21v-7" />
+            </svg>
+        </div>
+        <!-- Lock (Security) -->
+        <div class="floating-icon float-6">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                <path d="M7 11V7a5 5 0 0110 0v4" />
+            </svg>
+        </div>
+        <!-- Search -->
+        <div class="floating-icon float-7">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="11" cy="11" r="8" />
+                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+        </div>
+        <!-- Brain (AI) -->
+        <div class="floating-icon float-8">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 2a4 4 0 014 4c0 1.1-.45 2.1-1.17 2.83L12 12V2z" />
+                <path d="M12 2a4 4 0 00-4 4c0 1.1.45 2.1 1.17 2.83L12 12V2z" />
+                <path d="M12 12v10" />
+                <path d="M8 22h8" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo (Clickable) -->
+                <a href="index.html" class="nav-logo-link">
+                    <img src="favicon.png" alt="VerifAI Logo" class="nav-logo-img">
+                    <span class="text-2xl font-bold"
+                        style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">VerifAI</span>
+                </a>
+
+                <!-- Desktop Navigation & Theme Dropdown -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="home.html" class="nav-link active">Home</a>
+                    <a href="about.html" class="nav-link">About</a>
+
+                    <!-- Theme Dropdown -->
+                    <div class="theme-dropdown" id="themeDropdown">
+                        <button class="theme-dropdown-btn" onclick="toggleThemeDropdown()">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                                </path>
+                            </svg>
+                            <span>Theme</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="theme-dropdown-menu">
+                            <div class="theme-option active" onclick="selectTheme('dark')">
+                                <div class="theme-color-dot"
+                                    style="background: linear-gradient(135deg, #0f172a, #334155);"></div>
+                                <span>Dark</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('ocean')">
+                                <div class="theme-color-dot"
+                                    style="background: linear-gradient(135deg, #0c2f4d, #1f618d);"></div>
+                                <span>Ocean</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('forest')">
+                                <div class="theme-color-dot"
+                                    style="background: linear-gradient(135deg, #1a3a2e, #2d6a4f);"></div>
+                                <span>Forest</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('cream')">
+                                <div class="theme-color-dot"
+                                    style="background: linear-gradient(135deg, #f5f3e7, #d4cdb0);"></div>
+                                <span>Cream</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('light')">
+                                <div class="theme-color-dot"
+                                    style="background: linear-gradient(135deg, #ffffff, #e2e8f0);"></div>
+                                <span>Light</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn md:hidden" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="nav-links md:hidden">
+                <a href="home.html" class="nav-link active block py-2">Home</a>
+                <a href="about.html" class="nav-link block py-2">About</a>
+                <div class="pt-4 pb-2">
+                    <p class="text-xs mb-2" style="color: var(--text-muted);">Theme</p>
+                    <div class="space-y-2">
+                        <div class="theme-option active" onclick="selectTheme('dark')">
+                            <div class="theme-color-dot" style="background: linear-gradient(135deg, #0f172a, #334155);">
+                            </div>
+                            <span>Dark</span>
+                        </div>
+                        <div class="theme-option" onclick="selectTheme('ocean')">
+                            <div class="theme-color-dot" style="background: linear-gradient(135deg, #0c2f4d, #1f618d);">
+                            </div>
+                            <span>Ocean</span>
+                        </div>
+                        <div class="theme-option" onclick="selectTheme('forest')">
+                            <div class="theme-color-dot" style="background: linear-gradient(135deg, #1a3a2e, #2d6a4f);">
+                            </div>
+                            <span>Forest</span>
+                        </div>
+                        <div class="theme-option" onclick="selectTheme('cream')">
+                            <div class="theme-color-dot" style="background: linear-gradient(135deg, #f5f3e7, #d4cdb0);">
+                            </div>
+                            <span>Cream</span>
+                        </div>
+                        <div class="theme-option" onclick="selectTheme('light')">
+                            <div class="theme-color-dot" style="background: linear-gradient(135deg, #ffffff, #e2e8f0);">
+                            </div>
+                            <span>Light</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Combat Misinformation with AI</h1>
+        <p class="hero-subtitle">Advanced artificial intelligence to detect fake news, verify sources, and ensure the
+            credibility of information in real-time.</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            <!-- Text Verification Card -->
+            <div class="card">
+                <div class="flex items-center mb-6">
+                    <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="color: var(--accent-primary);">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                        </path>
+                    </svg>
+                    <h2 class="text-2xl font-bold">Verify Text Article</h2>
+                </div>
+                <p class="text-sm mb-4" style="color: var(--text-muted);">Paste or type the article content below to
+                    analyze its credibility</p>
+                <textarea id="textInput"
+                    class="w-full p-4 rounded-lg border-2 focus:outline-none focus:border-2 resize-none"
+                    style="background: var(--bg-tertiary); border-color: var(--border-color); color: var(--text-primary); min-height: 200px;"
+                    placeholder="Enter article text here..."></textarea>
+                <button class="btn btn-primary w-full mt-4" onclick="verifyText()">
+                    <span class="flex items-center justify-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        Analyze Text
+                    </span>
+                </button>
+                <div id="textResult" class="hidden mt-6"></div>
+            </div>
+
+            <!-- Image Verification Card -->
+            <div class="card">
+                <div class="flex items-center mb-6">
+                    <svg class="w-8 h-8 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="color: var(--accent-primary);">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                    <h2 class="text-2xl font-bold">Verify Image</h2>
+                </div>
+                <p class="text-sm mb-4" style="color: var(--text-muted);">Upload an image to check for manipulations and
+                    verify authenticity</p>
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('imageInput').click()">
+                    <input type="file" id="imageInput" accept="image/*" class="hidden"
+                        onchange="handleImageUpload(event)">
+                    <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        style="color: var(--accent-primary);">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12">
+                        </path>
+                    </svg>
+                    <p class="text-lg font-semibold mb-2">Drop image here or click to upload</p>
+                    <p class="text-sm" style="color: var(--text-muted);">Supports: JPG, PNG, WEBP</p>
+                </div>
+                <div id="imagePreview" class="hidden mt-4 text-center">
+                    <img id="previewImg" class="max-w-full h-auto rounded-lg mx-auto mb-4" style="max-height: 200px;">
+                    <button class="btn btn-primary" onclick="verifyImage()">
+                        <span class="flex items-center justify-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            Analyze Image
+                        </span>
+                    </button>
+                </div>
+                <div id="imageResult" class="hidden mt-6"></div>
+            </div>
+        </div>
+
+        <!-- How It Works - Animated Demo Section -->
+        <div class="mb-16">
+            <h2 class="section-title text-center mb-4">How It Works</h2>
+            <p class="section-subtitle text-center mx-auto mb-8">Watch the verification process in action</p>
+
+            <div class="demo-container" id="demoContainer">
+                <!-- Progress Dots -->
+                <div class="demo-progress">
+                    <div class="demo-dot active" data-step="1"></div>
+                    <div class="demo-dot" data-step="2"></div>
+                    <div class="demo-dot" data-step="3"></div>
+                </div>
+
+                <!-- Step 1: Text Input Demo -->
+                <div class="demo-step active" id="demoStep1">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div class="text-center lg:text-left">
+                            <h3 class="text-2xl font-bold mb-4" style="color: var(--accent-primary);">📝 Step 1: Submit
+                                Content</h3>
+                            <p class="mb-4" style="color: var(--text-secondary);">Paste any article, news headline, or
+                                social media post you want to verify.</p>
+                            <ul class="space-y-2" style="color: var(--text-muted);">
+                                <li class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" style="color: var(--accent-primary);" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Text articles & news
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" style="color: var(--accent-primary);" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Social media posts
+                                </li>
+                                <li class="flex items-center gap-2">
+                                    <svg class="w-5 h-5" style="color: var(--accent-primary);" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Images for deepfake detection
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="demo-mockup">
+                            <div class="demo-mockup-header">
+                                <div class="demo-mockup-dot" style="background: #ef4444;"></div>
+                                <div class="demo-mockup-dot" style="background: #eab308;"></div>
+                                <div class="demo-mockup-dot" style="background: #22c55e;"></div>
+                            </div>
+                            <div class="p-4 rounded-lg" style="background: var(--bg-tertiary);">
+                                <p class="typing-effect" style="color: var(--text-secondary);">Breaking: Scientists
+                                    discover new...</p>
+                            </div>
+                            <button class="btn btn-primary w-full mt-4" style="pointer-events: none;">
+                                🔍 Analyze Text
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: AI Analysis Demo -->
+                <div class="demo-step" id="demoStep2">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                        <div class="demo-mockup order-2 lg:order-1 relative" style="min-height: 200px;">
+                            <div class="scan-line"></div>
+                            <div class="text-center py-8">
+                                <div class="w-20 h-20 mx-auto mb-4 rounded-full flex items-center justify-center"
+                                    style="background: var(--button-bg); animation: pulse 2s infinite;">
+                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        style="color: var(--button-text);">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <p class="font-semibold" style="color: var(--text-primary);">AI Processing...</p>
+                                <p class="text-sm" style="color: var(--text-muted);">Analyzing content patterns</p>
+                            </div>
+                        </div>
+                        <div class="text-center lg:text-right order-1 lg:order-2">
+                            <h3 class="text-2xl font-bold mb-4" style="color: var(--accent-primary);">🤖 Step 2: AI
+                                Analysis</h3>
+                            <p class="mb-4" style="color: var(--text-secondary);">Our advanced AI scans the content
+                                using multiple detection methods.</p>
+                            <ul class="space-y-2" style="color: var(--text-muted);">
+                                <li class="flex items-center justify-end gap-2">
+                                    Natural Language Processing
+                                    <svg class="w-5 h-5" style="color: var(--accent-primary);" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </li>
+                                <li class="flex items-center justify-end gap-2">
+                                    Source Credibility Check
+                                    <svg class="w-5 h-5" style="color: var(--accent-primary);" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </li>
+                                <li class="flex items-center justify-end gap-2">
+                                    Cross-Reference Facts
+                                    <svg class="w-5 h-5" style="color: var(--accent-primary);" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3: Results Demo -->
+                <div class="demo-step" id="demoStep3">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold mb-6" style="color: var(--accent-primary);">📊 Step 3: Get Instant
+                            Results</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                            <div class="demo-mockup text-center p-6">
+                                <div class="w-20 h-20 mx-auto mb-3 rounded-full border-4 flex items-center justify-center"
+                                    style="border-color: var(--accent-primary);">
+                                    <span class="text-2xl font-bold" style="color: var(--accent-primary);">87%</span>
+                                </div>
+                                <p class="font-semibold" style="color: var(--text-primary);">Credibility Score</p>
+                            </div>
+                            <div class="demo-mockup text-center p-6">
+                                <div class="w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center"
+                                    style="background: rgba(74, 222, 128, 0.2);">
+                                    <svg class="w-10 h-10" style="color: #4ade80;" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                </div>
+                                <p class="font-semibold" style="color: #4ade80;">Verified Source</p>
+                            </div>
+                            <div class="demo-mockup text-center p-6">
+                                <div class="w-20 h-20 mx-auto mb-3 rounded-full flex items-center justify-center"
+                                    style="background: var(--button-bg);">
+                                    <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                        style="color: var(--button-text);">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                    </svg>
+                                </div>
+                                <p class="font-semibold" style="color: var(--text-primary);">Real-Time</p>
+                            </div>
+                        </div>
+                        <p style="color: var(--text-muted);">Results include detailed analysis and recommendations</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="flex justify-center gap-4 mt-8">
+                    <button class="btn btn-outline" onclick="prevDemoStep()" id="prevBtn" style="display: none;">
+                        ← Previous
+                    </button>
+                    <button class="btn btn-primary" onclick="nextDemoStep()" id="nextBtn">
+                        Next →
+                    </button>
+                    <button class="btn btn-primary" onclick="restartDemo()" id="restartBtn" style="display: none;">
+                        ↺ Watch Again
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+            <div class="card text-center">
+                <div class="icon-box mx-auto">
+                    <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Fake News Alerts</h3>
+                <p style="color: var(--text-muted);">Get instant notifications when suspicious content is detected</p>
+            </div>
+
+            <div class="card text-center">
+                <div class="icon-box mx-auto">
+                    <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Credibility Scoring</h3>
+                <p style="color: var(--text-muted);">AI-powered scoring system to rate source trustworthiness</p>
+            </div>
+
+            <div class="card text-center">
+                <div class="icon-box mx-auto">
+                    <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-2">Reduced Misinformation</h3>
+                <p style="color: var(--text-muted);">Help create a more informed and truthful information ecosystem</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" style="background: var(--bg-secondary);">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="section-title text-center">Frequently Asked Questions</h2>
+            <p class="section-subtitle text-center mx-auto mb-12">Everything you need to know about VerifAI</p>
+
+            <div class="space-y-4">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What is VerifAI?</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        VerifAI is an AI-powered platform designed to detect and classify fake or misleading news using
+                        advanced content analysis and source credibility verification. We help users identify
+                        misinformation before it spreads.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How accurate is the AI detection?</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Our AI models achieve approximately 98% accuracy rate based on millions of analyzed articles.
+                        However, we always recommend cross-referencing important information with multiple trusted
+                        sources for critical decisions.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What types of content can I verify?</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        VerifAI currently supports text articles and images. You can paste news articles, social media
+                        posts, or upload images to check for manipulations, deepfakes, and verify their authenticity.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is my data stored or shared?</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        No, we prioritize your privacy. Content you submit for verification is analyzed in real-time and
+                        not permanently stored on our servers. We do not share your data with third parties.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do I interpret credibility scores?</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Scores range from 0-100%. Higher scores (above 60%) indicate likely credible content. Scores
+                        below 60% suggest potential misinformation. The score is based on multiple factors including
+                        source reputation, content consistency, and historical accuracy patterns.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I verify content in different languages?</span>
+                        <svg class="faq-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </div>
+                    <div class="faq-answer">
+                        Currently, VerifAI works best with English content. We're actively working on expanding our
+                        language support to include Spanish, French, German, and other major languages in future
+                        updates.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Spacing -->
+    <div style="height: 60px;"></div>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Theme Dropdown
+        function toggleThemeDropdown() {
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        function selectTheme(theme) {
+            changeTheme(theme);
+            // Update active state in dropdown and mobile menu
+            document.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                if (opt.textContent.trim().toLowerCase() === theme) {
+                    opt.classList.add('active');
+                }
+            });
+            // Close dropdown
+            document.getElementById('themeDropdown').classList.remove('active');
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('themeDropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
+        });
+
+        // Demo Navigation
+        let currentDemoStep = 1;
+        const totalDemoSteps = 3;
+
+        function updateDemoStep() {
+            // Hide all steps
+            for (let i = 1; i <= totalDemoSteps; i++) {
+                const step = document.getElementById('demoStep' + i);
+                const dot = document.querySelector('.demo-dot[data-step="' + i + '"]');
+                if (step) step.classList.remove('active');
+                if (dot) dot.classList.remove('active');
+            }
+            // Show current step
+            const currentStep = document.getElementById('demoStep' + currentDemoStep);
+            const currentDot = document.querySelector('.demo-dot[data-step="' + currentDemoStep + '"]');
+            if (currentStep) currentStep.classList.add('active');
+            if (currentDot) currentDot.classList.add('active');
+
+            // Update buttons
+            document.getElementById('prevBtn').style.display = currentDemoStep > 1 ? 'inline-block' : 'none';
+            document.getElementById('nextBtn').style.display = currentDemoStep < totalDemoSteps ? 'inline-block' : 'none';
+            document.getElementById('restartBtn').style.display = currentDemoStep === totalDemoSteps ? 'inline-block' : 'none';
+        }
+
+        function nextDemoStep() {
+            if (currentDemoStep < totalDemoSteps) {
+                currentDemoStep++;
+                updateDemoStep();
+            }
+        }
+
+        function prevDemoStep() {
+            if (currentDemoStep > 1) {
+                currentDemoStep--;
+                updateDemoStep();
+            }
+        }
+
+        function restartDemo() {
+            currentDemoStep = 1;
+            updateDemoStep();
+        }
+    </script>
+</body>
+
+</html>

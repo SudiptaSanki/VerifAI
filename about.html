@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - VerifAI</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="theme-dark">
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo (Clickable) -->
+                <a href="index.html"
+                    style="display: flex; align-items: center; gap: 12px; text-decoration: none; transition: transform 0.3s ease;">
+                    <img src="favicon.png" alt="VerifAI Logo" style="width: 40px; height: 40px; border-radius: 8px;">
+                    <span class="text-2xl font-bold"
+                        style="background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">VerifAI</span>
+                </a>
+
+                <!-- Desktop Navigation & Theme Dropdown -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="home.html" class="nav-link" style="position: relative;">Home</a>
+                    <a href="about.html" class="nav-link active" style="position: relative;">About</a>
+
+                    <!-- Theme Dropdown -->
+                    <div class="theme-dropdown" id="themeDropdown" style="position: relative;">
+                        <button class="theme-dropdown-btn" onclick="toggleThemeDropdown()"
+                            style="display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 8px; background: var(--bg-tertiary); border: 1px solid var(--border-color); color: var(--text-primary); cursor: pointer;">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01">
+                                </path>
+                            </svg>
+                            <span>Theme</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                        <div class="theme-dropdown-menu" id="themeMenu"
+                            style="position: absolute; top: 100%; right: 0; margin-top: 8px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; min-width: 180px; display: none; z-index: 1000; box-shadow: 0 10px 40px rgba(0,0,0,0.3);">
+                            <div class="theme-option" onclick="selectTheme('dark')"
+                                style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                                <div
+                                    style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #0f172a, #334155);">
+                                </div>
+                                <span>Dark</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('ocean')"
+                                style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                                <div
+                                    style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #0c2f4d, #1f618d);">
+                                </div>
+                                <span>Ocean</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('forest')"
+                                style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                                <div
+                                    style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #1a3a2e, #2d6a4f);">
+                                </div>
+                                <span>Forest</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('cream')"
+                                style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                                <div
+                                    style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #f5f3e7, #d4cdb0);">
+                                </div>
+                                <span>Cream</span>
+                            </div>
+                            <div class="theme-option" onclick="selectTheme('light')"
+                                style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                                <div
+                                    style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #ffffff, #e2e8f0);">
+                                </div>
+                                <span>Light</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn md:hidden" onclick="toggleMobileMenu()">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div class="nav-links md:hidden">
+                <a href="home.html" class="nav-link block py-2">Home</a>
+                <a href="about.html" class="nav-link active block py-2">About</a>
+                <div class="pt-4 pb-2">
+                    <p class="text-xs mb-2" style="color: var(--text-muted);">Theme</p>
+                    <div class="space-y-2">
+                        <div onclick="selectTheme('dark')"
+                            style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #0f172a, #334155);">
+                            </div>
+                            <span>Dark</span>
+                        </div>
+                        <div onclick="selectTheme('ocean')"
+                            style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #0c2f4d, #1f618d);">
+                            </div>
+                            <span>Ocean</span>
+                        </div>
+                        <div onclick="selectTheme('forest')"
+                            style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #1a3a2e, #2d6a4f);">
+                            </div>
+                            <span>Forest</span>
+                        </div>
+                        <div onclick="selectTheme('cream')"
+                            style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #f5f3e7, #d4cdb0);">
+                            </div>
+                            <span>Cream</span>
+                        </div>
+                        <div onclick="selectTheme('light')"
+                            style="display: flex; align-items: center; gap: 12px; padding: 10px 12px; border-radius: 8px; cursor: pointer; color: var(--text-primary);">
+                            <div
+                                style="width: 24px; height: 24px; border-radius: 50%; background: linear-gradient(135deg, #ffffff, #e2e8f0);">
+                            </div>
+                            <span>Light</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">About VerifAI</h1>
+        <p class="text-xl" style="color: var(--text-secondary); max-width: 700px; margin: 0 auto;">
+            Empowering truth through artificial intelligence. Combating misinformation one article at a time.
+        </p>
+    </section>
+
+    <!-- Mission Section -->
+    <div class="section" style="background: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="section-title">Our Mission</h2>
+                <p class="section-subtitle mx-auto">
+                    In an age of information overload, VerifAI stands as a guardian of truth. We leverage cutting-edge
+                    artificial intelligence to detect, analyze, and classify fake or misleading news through
+                    comprehensive content analysis and source credibility verification.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card text-center">
+                    <div class="icon-box mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Advanced AI Analysis</h3>
+                    <p style="color: var(--text-muted);">Deep learning models trained on millions of articles to
+                        identify patterns of misinformation</p>
+                </div>
+
+                <div class="card text-center">
+                    <div class="icon-box mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Real-Time Detection</h3>
+                    <p style="color: var(--text-muted);">Instant verification of text and images with immediate
+                        credibility scoring</p>
+                </div>
+
+                <div class="card text-center">
+                    <div class="icon-box mx-auto">
+                        <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Global Impact</h3>
+                    <p style="color: var(--text-muted);">Serving millions of users worldwide to create a more informed
+                        society</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stakeholders Section -->
+    <div class="section" style="background: var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="section-title">Our Stakeholders</h2>
+                <p class="section-subtitle mx-auto">
+                    VerifAI serves a diverse ecosystem of organizations and individuals committed to fighting
+                    misinformation
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <div class="card">
+                    <div class="icon-box">
+                        <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Media Houses</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        Empowering newsrooms with tools to verify stories before publication and maintain journalistic
+                        integrity in the digital age.
+                    </p>
+                    <div>
+                        <span class="stakeholder-badge">Fact Checking</span>
+                        <span class="stakeholder-badge">Source Verification</span>
+                        <span class="stakeholder-badge">Content Analysis</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon-box">
+                        <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Government Agencies</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        Supporting public sector organizations in identifying and countering disinformation campaigns
+                        that threaten national security.
+                    </p>
+                    <div>
+                        <span class="stakeholder-badge">Threat Detection</span>
+                        <span class="stakeholder-badge">Policy Support</span>
+                        <span class="stakeholder-badge">Public Safety</span>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="icon-box">
+                        <svg class="w-8 h-8" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Social Platforms</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 20px;">
+                        Helping social media platforms maintain content quality and reduce the spread of false
+                        information across their networks.
+                    </p>
+                    <div>
+                        <span class="stakeholder-badge">Content Moderation</span>
+                        <span class="stakeholder-badge">User Protection</span>
+                        <span class="stakeholder-badge">Platform Integrity</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expected Outcomes Section -->
+    <div class="section" style="background: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="section-title">Expected Outcomes</h2>
+                <p class="section-subtitle mx-auto">
+                    Our platform delivers measurable impact in the fight against misinformation
+                </p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3 class="text-2xl font-bold mb-3" style="color: var(--accent-primary);">🚨 Fake News Alerts</h3>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                        Instant notifications when suspicious content is detected. Our AI continuously monitors and
+                        flags potentially misleading information, providing real-time alerts to prevent the spread of
+                        false narratives.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="text-2xl font-bold mb-3" style="color: var(--accent-primary);">📊 Credibility Scoring
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                        Comprehensive credibility ratings based on multiple factors including source reputation, content
+                        consistency, cross-referencing with trusted databases, and historical accuracy patterns.
+                    </p>
+                </div>
+
+                <div class="timeline-item">
+                    <h3 class="text-2xl font-bold mb-3" style="color: var(--accent-primary);">🌐 Reduced Misinformation
+                    </h3>
+                    <p style="color: var(--text-secondary); font-size: 1.1rem;">
+                        Creating a more informed society by reducing the spread of false information. Our collective
+                        effort helps build trust in digital media and promotes fact-based discourse.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="section" style="background: var(--bg-secondary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="stat-box">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Accuracy Rate</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">5M+</div>
+                    <div class="stat-label">Articles Analyzed</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">50K+</div>
+                    <div class="stat-label">Daily Users</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Monitoring</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Technology Section -->
+    <div class="section" style="background: var(--bg-primary);">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="section-title">Our Technology</h2>
+                <p class="section-subtitle mx-auto">
+                    VerifAI leverages state-of-the-art machine learning and natural language processing
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="w-10 h-10 rounded-lg flex items-center justify-center mr-3"
+                            style="background: var(--button-bg);">
+                            <svg class="w-6 h-6" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                        </span>
+                        Text Analysis Engine
+                    </h3>
+                    <p style="color: var(--text-muted);">
+                        Our NLP models analyze linguistic patterns, sentiment, writing style, and cross-reference claims
+                        with verified databases to identify potential misinformation.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="w-10 h-10 rounded-lg flex items-center justify-center mr-3"
+                            style="background: var(--button-bg);">
+                            <svg class="w-6 h-6" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                        </span>
+                        Image Verification
+                    </h3>
+                    <p style="color: var(--text-muted);">
+                        Computer vision algorithms detect image manipulation, deepfakes, and altered media using
+                        forensic analysis and reverse image searching.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="w-10 h-10 rounded-lg flex items-center justify-center mr-3"
+                            style="background: var(--button-bg);">
+                            <svg class="w-6 h-6" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                                </path>
+                            </svg>
+                        </span>
+                        Source Credibility
+                    </h3>
+                    <p style="color: var(--text-muted);">
+                        We maintain a comprehensive database of news sources, rating their historical accuracy and bias
+                        patterns to provide context for every article.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="w-10 h-10 rounded-lg flex items-center justify-center mr-3"
+                            style="background: var(--button-bg);">
+                            <svg class="w-6 h-6" fill="none" stroke="#0f172a" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </span>
+                        Real-Time Processing
+                    </h3>
+                    <p style="color: var(--text-muted);">
+                        Lightning-fast analysis delivers results in seconds, enabling immediate verification before
+                        content spreads across social networks.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Spacing -->
+    <div style="height: 60px;"></div>
+
+    <script src="scripts.js"></script>
+    <script>
+        // Theme Dropdown Toggle
+        function toggleThemeDropdown() {
+            const menu = document.getElementById('themeMenu');
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+            } else {
+                menu.style.display = 'none';
+            }
+        }
+
+        function selectTheme(theme) {
+            changeTheme(theme);
+            const menu = document.getElementById('themeMenu');
+            if (menu) menu.style.display = 'none';
+        }
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function (e) {
+            const dropdown = document.getElementById('themeDropdown');
+            if (dropdown && !dropdown.contains(e.target)) {
+                const menu = document.getElementById('themeMenu');
+                if (menu) menu.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+
+</html>
