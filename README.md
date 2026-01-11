@@ -98,10 +98,11 @@ Response:
 
 | Function | File | Line | Purpose |
 |----------|------|------|---------|
-| `verifyText()` | scripts.js | ~45 | Replace mock with API call |
-| `verifyImage()` | scripts.js | ~75 | Replace mock with API call |
-| `displayTextResult()` | scripts.js | ~60 | Update to parse API response |
-| `displayImageResult()` | scripts.js | ~90 | Update to parse API response |
+| `verifyText()` | scripts.js | ~71 | Replace mock with API call |
+| `verifyImage()` | scripts.js | ~109 | Replace mock with API call |
+| `handleImageUpload()` | scripts.js | ~54 | Handle image file upload |
+| `removeImage()` | scripts.js | ~69 | Reset image upload for re-upload |
+| `toggleMobileMenu()` | scripts.js | ~181 | Toggle mobile menu with hamburger animation |
 
 ## 📱 Pages Overview
 
@@ -112,10 +113,11 @@ Response:
 
 ### Home Page (`home.html`)
 - Text verification card (textarea input)
-- Image verification card (drag & drop upload)
-- "How It Works" animated demo (3 steps)
+- Image verification card (drag & drop upload with **Remove Image** button)
+- "How It Works" animated demo (3 steps with **rotating headlines**)
 - Feature highlights section
 - FAQ accordion
+- **Animated hamburger menu** (transforms to X on mobile)
 
 ### About Page (`about.html`)
 - Mission statement

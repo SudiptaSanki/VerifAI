@@ -4,14 +4,14 @@
 
 function changeTheme(theme) {
     document.body.className = `theme-${theme}`;
-    
+
     // Update active button state
     document.querySelectorAll('.theme-btn').forEach(btn => btn.classList.remove('active'));
     const activeBtn = document.querySelector(`.theme-${theme}-btn`);
     if (activeBtn) {
         activeBtn.classList.add('active');
     }
-    
+
     // Save theme preference
     localStorage.setItem('verifai-theme', theme);
 }
@@ -59,9 +59,26 @@ function handleImageUpload(event) {
             document.getElementById('previewImg').src = e.target.result;
             document.getElementById('imagePreview').classList.remove('hidden');
             document.getElementById('uploadArea').style.display = 'none';
+            // Hide any previous results
+            document.getElementById('imageResult').classList.add('hidden');
         };
         reader.readAsDataURL(file);
     }
+}
+
+function removeImage() {
+    // Reset the file input
+    const imageInput = document.getElementById('imageInput');
+    if (imageInput) {
+        imageInput.value = '';
+    }
+    // Hide preview and show upload area
+    document.getElementById('imagePreview').classList.add('hidden');
+    document.getElementById('uploadArea').style.display = 'block';
+    // Clear the preview image
+    document.getElementById('previewImg').src = '';
+    // Hide any previous results
+    document.getElementById('imageResult').classList.add('hidden');
 }
 
 /* ============================================
@@ -79,7 +96,7 @@ function verifyText() {
     const resultDiv = document.getElementById('textResult');
     const score = Math.floor(Math.random() * 100);
     const isFake = score < 60;
-    
+
     resultDiv.innerHTML = `
         <div style="text-align: center;">
             <div class="score-circle">
@@ -90,14 +107,14 @@ function verifyText() {
                 ${isFake ? '⚠️ Potentially Fake News' : '✅ Likely Credible'}
             </div>
             <p class="mt-4" style="color: var(--text-muted);">
-                ${isFake 
-                    ? 'This content shows signs of misinformation. Cross-reference with trusted sources.' 
-                    : 'This content appears credible based on our analysis. Always verify important information.'}
+                ${isFake
+            ? 'This content shows signs of misinformation. Cross-reference with trusted sources.'
+            : 'This content appears credible based on our analysis. Always verify important information.'}
             </p>
         </div>
     `;
     resultDiv.classList.remove('hidden');
-    
+
     // Smooth scroll to results
     resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -110,7 +127,7 @@ function verifyImage() {
     const resultDiv = document.getElementById('imageResult');
     const score = Math.floor(Math.random() * 100);
     const isManipulated = score < 65;
-    
+
     resultDiv.innerHTML = `
         <div style="text-align: center;">
             <div class="score-circle">
@@ -121,14 +138,14 @@ function verifyImage() {
                 ${isManipulated ? '⚠️ Possible Manipulation Detected' : '✅ Appears Authentic'}
             </div>
             <p class="mt-4" style="color: var(--text-muted);">
-                ${isManipulated 
-                    ? 'AI detected potential image manipulation. Verify the source before sharing.' 
-                    : 'No significant manipulation detected. Image appears to be authentic.'}
+                ${isManipulated
+            ? 'AI detected potential image manipulation. Verify the source before sharing.'
+            : 'No significant manipulation detected. Image appears to be authentic.'}
             </p>
         </div>
     `;
     resultDiv.classList.remove('hidden');
-    
+
     // Smooth scroll to results
     resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
@@ -140,12 +157,12 @@ function verifyImage() {
 function toggleFAQ(element) {
     const faqItem = element.closest('.faq-item');
     const isActive = faqItem.classList.contains('active');
-    
+
     // Close all FAQ items
     document.querySelectorAll('.faq-item').forEach(item => {
         item.classList.remove('active');
     });
-    
+
     // Toggle current item
     if (!isActive) {
         faqItem.classList.add('active');
@@ -156,7 +173,7 @@ function toggleFAQ(element) {
 document.addEventListener('DOMContentLoaded', () => {
     const faqQuestions = document.querySelectorAll('.faq-question');
     faqQuestions.forEach(question => {
-        question.addEventListener('click', function() {
+        question.addEventListener('click', function () {
             toggleFAQ(this);
         });
     });
@@ -168,7 +185,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function toggleMobileMenu() {
     const navLinks = document.querySelector('.nav-links');
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     if (navLinks) {
         navLinks.classList.toggle('active');
+    }
+    if (mobileMenuBtn) {
+        mobileMenuBtn.classList.toggle('active');
     }
 }

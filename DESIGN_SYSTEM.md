@@ -97,6 +97,27 @@ font-family: 'Inter', sans-serif;
 - Logo (favicon.png) + brand name clickable → redirects to landing
 - Nav links with gradient underline on hover
 - Theme dropdown button
+- **Animated hamburger menu** (3 lines → X transform on mobile)
+
+### Hamburger Menu Animation
+```css
+.hamburger-icon span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background: var(--text-primary);
+    transition: all 0.3s ease;
+}
+.mobile-menu-btn.active .hamburger-icon span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.mobile-menu-btn.active .hamburger-icon span:nth-child(2) {
+    opacity: 0;
+}
+.mobile-menu-btn.active .hamburger-icon span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+```
 
 ### Cards
 ```css
@@ -152,6 +173,19 @@ font-family: 'Inter', sans-serif;
 }
 ```
 
+### Image Re-Upload
+- **Remove Image** button appears after upload
+- Clicking resets upload area for new image
+- No page reload required
+
+```javascript
+function removeImage() {
+    document.getElementById('imageInput').value = '';
+    document.getElementById('imagePreview').classList.add('hidden');
+    document.getElementById('uploadArea').style.display = 'block';
+}
+```
+
 ---
 
 ## 🎬 Animations
@@ -172,6 +206,20 @@ font-family: 'Inter', sans-serif;
 }
 ```
 Icons: Shield, Checkmark, Document, Eye, Lightbulb, Lock, Search, Brain
+
+### Rotating Headlines
+```javascript
+// Headlines cycle every 4 seconds with fade animation
+const headlines = [
+    "Breaking: Scientists discover new breakthrough...",
+    "Report: Global climate summit reaches agreement...",
+    "Shocking: Celebrity endorses miracle cure...",
+    "Update: Tech giant announces AI launch...",
+    "Alert: Study links social media to health...",
+    "Exclusive: Government files reveal leak..."
+];
+setInterval(rotateHeadline, 4000);
+```
 
 ### Nav Link Hover
 ```css

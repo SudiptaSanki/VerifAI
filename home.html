@@ -468,12 +468,13 @@
                     </div>
                 </div>
 
-                <!-- Mobile Menu Button -->
+                <!-- Mobile Menu Button (Hamburger with animation) -->
                 <button class="mobile-menu-btn md:hidden" onclick="toggleMobileMenu()">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
+                    <div class="hamburger-icon">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
                 </button>
             </div>
 
@@ -581,15 +582,26 @@
                 </div>
                 <div id="imagePreview" class="hidden mt-4 text-center">
                     <img id="previewImg" class="max-w-full h-auto rounded-lg mx-auto mb-4" style="max-height: 200px;">
-                    <button class="btn btn-primary" onclick="verifyImage()">
-                        <span class="flex items-center justify-center">
-                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                            </svg>
-                            Analyze Image
-                        </span>
-                    </button>
+                    <div class="flex gap-3 justify-center flex-wrap">
+                        <button class="btn btn-primary" onclick="verifyImage()">
+                            <span class="flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                Analyze Image
+                            </span>
+                        </button>
+                        <button class="btn btn-outline" onclick="removeImage()">
+                            <span class="flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>
+                                Remove Image
+                            </span>
+                        </button>
+                    </div>
                 </div>
                 <div id="imageResult" class="hidden mt-6"></div>
             </div>
@@ -650,8 +662,8 @@
                                 <div class="demo-mockup-dot" style="background: #22c55e;"></div>
                             </div>
                             <div class="p-4 rounded-lg" style="background: var(--bg-tertiary);">
-                                <p class="typing-effect" style="color: var(--text-secondary);">Breaking: Scientists
-                                    discover new...</p>
+                                <p id="rotatingHeadline" class="typing-effect" style="color: var(--text-secondary);">
+                                    Breaking: Scientists discover new breakthrough in quantum computing...</p>
                             </div>
                             <button class="btn btn-primary w-full mt-4" style="pointer-events: none;">
                                 🔍 Analyze Text
@@ -980,6 +992,37 @@
             currentDemoStep = 1;
             updateDemoStep();
         }
+
+        // Rotating Headlines for Demo
+        const headlines = [
+            "Breaking: Scientists discover new breakthrough in quantum computing...",
+            "Report: Global climate summit reaches historic agreement on emissions...",
+            "Shocking: Celebrity endorses miracle cure without evidence...",
+            "Update: Tech giant announces revolutionary AI assistant launch...",
+            "Alert: New study links social media use to mental health concerns...",
+            "Exclusive: Government files reveal classified information leak..."
+        ];
+        let currentHeadlineIndex = 0;
+
+        function rotateHeadline() {
+            const headlineElement = document.getElementById('rotatingHeadline');
+            if (headlineElement) {
+                // Fade out
+                headlineElement.style.opacity = '0';
+                headlineElement.style.transition = 'opacity 0.5s ease';
+
+                setTimeout(() => {
+                    // Change text
+                    currentHeadlineIndex = (currentHeadlineIndex + 1) % headlines.length;
+                    headlineElement.textContent = headlines[currentHeadlineIndex];
+                    // Fade in
+                    headlineElement.style.opacity = '1';
+                }, 500);
+            }
+        }
+
+        // Start rotating headlines every 4 seconds
+        setInterval(rotateHeadline, 4000);
     </script>
 </body>
 
