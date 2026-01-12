@@ -239,17 +239,6 @@ Replace placeholder API keys with your actual Gemini API key.
 
 ---
 
-## 🌐 Deploy Frontend (Optional)
-
-```bash
-# Install Firebase CLI
-npm install -g firebase-tools
-
-# Login & Deploy
-firebase login
-firebase deploy
-```
-
 **Live URL:** `https://verifai-news.web.app`
 
 ---
@@ -263,3 +252,4 @@ For issues or contributions, please open a GitHub Issue.
 ## 📄 License
 
 MIT License - Feel free to use and modify!
+
