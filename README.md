@@ -22,13 +22,11 @@ AI-powered platform for detecting and classifying fake news using **NLP, BERT, a
 
 | File | Size | Description |
 |------|------|-------------|
-| `text_detection.py` | 6 KB | Text-based fake news detection API |
-| `image_detection.py` | 13 KB | Image-based fake news detection API |
 | `Fake.csv` | ~60 MB | Fake news training dataset |
 | `True.csv` | ~51 MB | Real news training dataset |
 | `distilbert_model/` | ~250 MB | Pre-trained DistilBERT model folder |
 
-### **Auto-Generated Files (Created on first run)**
+### **Auto-Generated Files (Created on first run | Also present in the drive link above 👆🏻)**
 
 | File | Description |
 |------|-------------|
@@ -253,6 +251,7 @@ For issues or contributions, please open a GitHub Issue.
 ## 📄 License
 
 MIT License - Feel free to use and modify!
+
 
 
 
