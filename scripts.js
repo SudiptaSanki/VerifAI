@@ -84,70 +84,190 @@ function removeImage() {
 /* ============================================
    TEXT VERIFICATION
    ============================================ */
+async function verifyText() {
+    const text = document.getElementById("textInput").value.trim();
+    const resultDiv = document.getElementById("textResult");
 
-function verifyText() {
-    const text = document.getElementById('textInput').value;
-    if (!text.trim()) {
-        alert('Please enter some text to analyze');
+    if (!text) {
+        alert("Please enter some text to analyze.");
         return;
     }
 
-    // Simulate AI analysis with random scoring
-    const resultDiv = document.getElementById('textResult');
-    const score = Math.floor(Math.random() * 100);
-    const isFake = score < 60;
-
+    // Show loading state
+    resultDiv.classList.remove("hidden");
     resultDiv.innerHTML = `
-        <div style="text-align: center;">
-            <div class="score-circle">
-                <span style="color: ${score >= 60 ? '#4ade80' : '#f87171'};">${score}%</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Credibility Score</h3>
-            <div class="result-badge ${isFake ? 'badge-fake' : 'badge-real'}">
-                ${isFake ? '⚠️ Potentially Fake News' : '✅ Likely Credible'}
-            </div>
-            <p class="mt-4" style="color: var(--text-muted);">
-                ${isFake
-            ? 'This content shows signs of misinformation. Cross-reference with trusted sources.'
-            : 'This content appears credible based on our analysis. Always verify important information.'}
-            </p>
+        <div style="text-align:center; padding:20px;">
+            <p style="opacity:0.8;">🔍 Analyzing news credibility...</p>
         </div>
     `;
-    resultDiv.classList.remove('hidden');
 
-    // Smooth scroll to results
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    try {
+        const response = await fetch("http://127.0.0.1:5000/check", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ text })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            resultDiv.innerHTML = `
+                <p style="color:#f87171;">${data.error || "Server error"}</p>
+            `;
+            return;
+        }
+
+        // Decide color based on verdict
+        let color, icon;
+        if (data.verdict === "REAL") {
+            color = "#4ade80";
+            icon = "✅";
+        } else if (data.verdict === "FAKE") {
+            color = "#f87171";
+            icon = "🚨";
+        } else {
+            color = "#facc15";
+            icon = "⚠️";
+        }
+
+        resultDiv.innerHTML = `
+            <div style="text-align:center;">
+                <div class="score-circle">
+                    <span style="color:${color};">
+                        ${data.credibility}%
+                    </span>
+                </div>
+
+                <h3 class="text-xl font-bold mt-2" style="color:${color};">
+                    ${icon} ${data.verdict}
+                </h3>
+
+                <div style="margin-top:12px; font-size:14px; opacity:0.85;">
+                    <p>ML Score: ${data.ml_score}</p>
+                    <p>BERT Score: ${data.bert_score}</p>
+                    <p>LLM Score: ${data.llm_score}</p>
+                    <p>Web Score: ${data.web_score}</p>
+                </div>
+            </div>
+        `;
+
+        // Smooth scroll to result
+        resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+
+    } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = `
+            <p style="color:#f87171;">
+                🚫 Backend not reachable. Is the server running?
+            </p>
+        `;
+    }
 }
+
 
 /* ============================================
    IMAGE VERIFICATION
    ============================================ */
 
-function verifyImage() {
+async function verifyImage() {
     const resultDiv = document.getElementById('imageResult');
-    const score = Math.floor(Math.random() * 100);
-    const isManipulated = score < 65;
+    const previewImg = document.getElementById('previewImg');
+    
+    if (!previewImg || !previewImg.src) {
+        alert("Please upload an image first.");
+        return;
+    }
 
+    // Show loading state
+    resultDiv.classList.remove('hidden');
     resultDiv.innerHTML = `
-        <div style="text-align: center;">
-            <div class="score-circle">
-                <span style="color: ${score >= 65 ? '#4ade80' : '#f87171'};">${score}%</span>
-            </div>
-            <h3 class="text-xl font-bold mb-2" style="color: var(--text-primary);">Authenticity Score</h3>
-            <div class="result-badge ${isManipulated ? 'badge-fake' : 'badge-real'}">
-                ${isManipulated ? '⚠️ Possible Manipulation Detected' : '✅ Appears Authentic'}
-            </div>
-            <p class="mt-4" style="color: var(--text-muted);">
-                ${isManipulated
-            ? 'AI detected potential image manipulation. Verify the source before sharing.'
-            : 'No significant manipulation detected. Image appears to be authentic.'}
-            </p>
+        <div style="text-align:center; padding:20px;">
+            <p style="opacity:0.8;">🔍 Analyzing image for fake news...</p>
         </div>
     `;
-    resultDiv.classList.remove('hidden');
 
-    // Smooth scroll to results
-    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    try {
+        const response = await fetch("http://127.0.0.1:5001/check-image", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ image: previewImg.src })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            resultDiv.innerHTML = `
+                <p style="color:#f87171;">${data.error || "Server error"}</p>
+            `;
+            return;
+        }
+
+        // Decide color based on verdict
+        let color, icon;
+        if (data.verdict === "REAL" || data.verdict === "LIKELY REAL") {
+            color = "#4ade80";
+            icon = "✅";
+        } else if (data.verdict === "FAKE") {
+            color = "#f87171";
+            icon = "🚨";
+        } else if (data.verdict === "SUSPICIOUS") {
+            color = "#fb923c";
+            icon = "⚠️";
+        } else {
+            color = "#facc15";
+            icon = "⚠️";
+        }
+
+        resultDiv.innerHTML = `
+            <div style="text-align: center;">
+                <div class="score-circle">
+                    <span style="color: ${color};">${data.credibility}%</span>
+                </div>
+                <h3 class="text-xl font-bold mt-2" style="color: ${color};">
+                    ${icon} ${data.verdict}
+                </h3>
+                <p class="mt-2" style="color: var(--text-muted); font-size: 14px;">
+                    ${data.alert}
+                </p>
+                
+                ${data.extracted_text ? `
+                <div style="margin-top: 16px; padding: 12px; background: rgba(0,0,0,0.2); border-radius: 8px; text-align: left;">
+                    <p style="font-size: 12px; opacity: 0.7; margin-bottom: 4px;">📝 Extracted Text:</p>
+                    <p style="font-size: 13px; font-style: italic;">"${data.extracted_text.substring(0, 150)}${data.extracted_text.length > 150 ? '...' : ''}"</p>
+                </div>
+                ` : ''}
+                
+                <div style="margin-top: 12px; font-size: 14px; opacity: 0.85;">
+                    <p>ML Score: ${data.ml_score}</p>
+                    <p>BERT Score: ${data.bert_score}</p>
+                    <p>LLM Score: ${data.llm_score}</p>
+                    <p>Web Score: ${data.web_score}</p>
+                    <p>Manipulation: ${data.image_manipulation_score}</p>
+                </div>
+                
+                ${data.concerns && data.concerns !== "None" ? `
+                <p class="mt-3" style="color: #fb923c; font-size: 13px;">
+                    ⚠️ ${data.concerns}
+                </p>
+                ` : ''}
+            </div>
+        `;
+
+        // Smooth scroll to results
+        resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = `
+            <p style="color:#f87171;">
+                🚫 Backend not reachable. Is the image detection server running on port 5001?
+            </p>
+        `;
+    }
 }
 
 /* ============================================
