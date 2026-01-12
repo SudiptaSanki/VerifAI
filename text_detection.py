@@ -28,7 +28,7 @@ ML_MODEL_PATH = "model.pkl"
 VECTORIZER_PATH = "vectorizer.pkl"
 
 # 🔑 GEMINI API KEY
-GEMINI_API_KEY = "AIzaSyAVH2lB_sryUv_pH5bm5UrLs7nX6BCI3PA"
+GEMINI_API_KEY = "Enter Your Gemini API key HERE"
 genai.configure(api_key=GEMINI_API_KEY)
 gemini = genai.GenerativeModel("gemini-1.5-flash")
 
@@ -224,3 +224,4 @@ if __name__ == "__main__":
         model, vectorizer = load_ml()
 
     app.run(port=5000, debug=True)
+
