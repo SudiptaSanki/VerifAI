@@ -18,7 +18,7 @@ AI-powered platform for detecting and classifying fake news using **NLP, BERT, a
 ## 📁 Files You Need
 
 ### **Required Files (Must Download)**
-⚠️ Drive Link (https://drive.google.com/drive/u/5/folders/1geC9JFIToCOqsGw41h5SEGaK4sSvrlq9) ⚠️
+⚠️ Download it from (https://drive.google.com/drive/u/5/folders/1geC9JFIToCOqsGw41h5SEGaK4sSvrlq9 "HERE")  ⚠️
 
 | File | Size | Description |
 |------|------|-------------|
@@ -253,5 +253,6 @@ For issues or contributions, please open a GitHub Issue.
 ## 📄 License
 
 MIT License - Feel free to use and modify!
+
 
 
